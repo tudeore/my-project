@@ -28,7 +28,6 @@ public class CartServiceTest {
 	@Autowired
 	CartService service;
 
-	
 	@Test
 	public void testGetCartByValidId() {
 		Optional<Cart> cart = service.getCartById(102);
@@ -46,7 +45,7 @@ public class CartServiceTest {
 	@Test
 	public void testGetAllCarts() {
 		List<Cart> cart = service.getAllCarts();
-		assertEquals(4, cart.size());
+		assertEquals(7, cart.size());
 	}
 	
 	@Test
@@ -68,7 +67,6 @@ public class CartServiceTest {
 		Cart cart = new Cart(106, "deores cafe", products, /* 18.97, */address);
 		service.updateCart(cart);
 		assertTrue(service.getCartById(107).get().getAddress().getCity().equalsIgnoreCase("navi-mumbai"));
-		
 	}
 	
 	

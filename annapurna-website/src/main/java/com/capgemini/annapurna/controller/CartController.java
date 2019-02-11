@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -38,37 +37,92 @@ public class CartController {
 	 * return "GetAllCart"; }
 	 */
 
-	@RequestMapping("/addCart")
-	public String addCart(@RequestParam String restaurantName, @RequestParam String foodName,
-			@RequestParam double price, @RequestParam int quantity, Model model) {
-		Set<FoodProducts> products = new HashSet<FoodProducts>();
-		products.add(new FoodProducts("Biryani", 100, 2));
-		Address address = new Address("Deopur", "Dhule", "Maharashtra", "India", 424002);
+	/*
+	 * @RequestMapping("/addCart") public String addCart(@RequestParam String
+	 * restaurantName, @RequestParam String foodName,
+	 * 
+	 * @RequestParam double price, @RequestParam int quantity, Model model) {
+	 * Set<FoodProducts> products = new HashSet<FoodProducts>(); products.add(new
+	 * FoodProducts("Biryani", 100, 2)); Address address = new Address("Deopur",
+	 * "Dhule", "Maharashtra", "India", 424002);
+	 * 
+	 * Cart cart = new Cart(104, "Hotel India", products, address); // (104,
+	 * "Hotel India", "Biryani", address);
+	 * restTemplate.postForEntity("http://localHost:8080/carts", cart, Cart.class);
+	 * model.addAttribute("cart", cart); return "GetAllCart"; }
+	 */
 
-		Cart cart = new Cart(104, "Hotel India", products, address);
-//				(104, "Hotel India", "Biryani", address);
-		restTemplate.postForEntity("http://localHost:8080/carts", cart, Cart.class);
-		model.addAttribute("cart", cart);
+	/*
+	 * @RequestMapping("/addCart") public String addCart(@RequestParam String
+	 * restaurantName, @RequestParam String foodName,
+	 * 
+	 * @RequestParam double price, @RequestParam int quantity, @ModelAttribute
+	 * Address address, Model model) { Set<FoodProducts> products = new
+	 * HashSet<FoodProducts>(); products.add(new FoodProducts(foodName, price,
+	 * quantity));
+	 * 
+	 * Cart cart = new Cart(106, restaurantName, products, address);
+	 * restTemplate.postForEntity("http://localHost:8080/carts", cart, Cart.class);
+	 * model.addAttribute("cart", cart); return "GetAllCart"; }
+	 */
+
+	@RequestMapping("/getCartById")
+	public String getCartById(@RequestParam("cartId") Integer cartId, Model model) {
+		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cartId + "",
+				Cart.class);
+		System.out.println(entity.getBody());
+		model.addAttribute("cart", entity.getBody());
 		return "GetAllCart";
 	}
-	
-	@RequestMapping("/getCartById")
-	public String getCartById(@RequestParam("cartId")Integer cartId,Model model){
-		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/"+cartId+"", Cart.class);
-		System.out.println(entity.getBody());
-		model.addAttribute("cart",entity.getBody());
-		return "GetAllCart";		
-	}
-	
+
 	@RequestMapping("/updateCart")
-	public String updateCart(@ModelAttribute Cart cart,Model  model) {
-		System.out.println("car  ="+cart);
-	 restTemplate.put("http://localhost:8080/carts/"+cart.getCartId(), cart);
-	 ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/"+cart.getCartId()+"", Cart.class);
+	public String updateCart(/* @ModelAttribute Cart cart, */Model model) {
+
+		Set<FoodProducts> products = new HashSet<FoodProducts>();
+		products.add(new FoodProducts("Jeera Rice", 30, 2));
+		products.add(new FoodProducts("Dal Rice", 40, 2));
+		products.add(new FoodProducts("Biryani", 60, 1));
+		products.add(new FoodProducts("Chiken Biryani", 150, 2));
+		products.add(new FoodProducts( "Rice", 30, 2));
+		Address address = new Address("Airoli", "Mumbai", "Maharashtra", "India", 402);
+				 
+		Cart cart = new Cart(104, "Hotel India", products, address);
+		restTemplate.put("http://localhost:8080/carts/" + cart.getCartId() + "", cart,Cart.class);
+		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cart.getCartId(),
+				Cart.class);
 		System.out.println(entity.getBody());
-		model.addAttribute("cart",entity.getBody());
-		return "GetAllCart";		
+		model.addAttribute("cart", entity.getBody());
+		return "GetAllCart";
 	}
+
+	@RequestMapping("/removecart")
+	public String removeFromCart(/* @ModelAttribute Cart cart, */ Model model) {
+
+		Set<FoodProducts> products = new HashSet<FoodProducts>();
+		products.add(new FoodProducts("Jeera Rice", 30, 2));
+		products.add(new FoodProducts("Dal Rice", 40, 2));
+		products.add(new FoodProducts("Biryani", 60, 1));
+		Address address = new Address("Airoli", "Mumbai", "Maharashtra", "India", 402);
+		
+		Cart cart = new Cart(104, "Hotel India", products, address);
+	
+		System.out.println(cart);
+		restTemplate.put("http://localHost:8080/carts/" + cart.getCartId(),  Cart.class);
+		restTemplate.delete("http://localHost:8080/carts/" + cart.getCartId(), Cart.class);
+		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cart.getCartId(),Cart.class);
+		model.addAttribute("cart", entity.getBody());
+		System.out.println("delete from cart  :"+entity.getBody());
+		return "GetAllCart";
+	}
+
+//	@RequestMapping("/deleteCart")
+//	public String deletCart(@ModelAttribute Cart cart, Model model) {
+//
+//		restTemplate.delete("/http://localHost:8080/carts" + cart.getCartId(), Cart.class);
+//		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localHost:8080/carts/" + cart.getCartId(),
+//				Cart.class);
+//		return "GetAllCart";
+//	}
 
 	/*
 	 * private Integer getUniqueId() { UUID idOne = UUID.randomUUID(); // String str
@@ -114,7 +168,8 @@ public class CartController {
 	 * Order.class); model.addAttribute("message", "heyyyyyyyy !!!!");
 	 * model.addAttribute("Order",order1.getBody()); return "Order";
 	 *
-	}*/
+	 * }
+	 */
 
 	/*
 	 * @RequestMapping("/submitAddress") public String placeOrder(@ModelAttribute

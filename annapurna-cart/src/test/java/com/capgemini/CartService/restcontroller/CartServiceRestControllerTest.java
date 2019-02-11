@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,6 @@ public class CartServiceRestControllerTest {
 
 		ResponseEntity<CartResources> entity = testRestTemplate.getForEntity("/carts/cartId", CartResources.class);
 
-//		assertEquals(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 		assertEquals(HttpStatus.BAD_REQUEST, entity.getStatusCode());
 
 	}
@@ -123,7 +121,7 @@ public class CartServiceRestControllerTest {
 	 ResponseEntity<Cart> responseEntity = testRestTemplate.getForEntity("/carts/106", Cart.class);
 	 System.out.println(responseEntity.getBody());
 
-		assertTrue(responseEntity.getBody().getAddress().getCity().equalsIgnoreCase("navi-mumbai"));
+		assertTrue(responseEntity.getBody().getAddress().getCity().equalsIgnoreCase("mumbai"));
 	}
 
 }

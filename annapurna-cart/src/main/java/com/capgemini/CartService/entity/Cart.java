@@ -14,25 +14,17 @@ public class Cart {
 	private Set<FoodProducts> products;
 	private double totalAmount;
 	private Address address;
-	
-	// private int quantity;
-	// private Set<Product> products;
-//	private String foodName;
-//	private double price;
-//	private Set<String> foodPhotos;
-//	private Address address;
 
 	public Cart() {
 		
 	}
 	
 	public Cart(int cartId, String restaurantName, Set<FoodProducts> products,
-			/* double totalAmount, */ Address address) {
+				Address address) {
 		super();
 		this.cartId = cartId;
 		this.restaurantName = restaurantName;
 		this.products = products;
-//		this.totalAmount = totalAmount;
 		this.address = address;
 	}
 

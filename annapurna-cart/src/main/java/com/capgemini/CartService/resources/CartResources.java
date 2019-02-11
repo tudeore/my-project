@@ -35,44 +35,14 @@ public class CartResources {
 		return new ResponseEntity<List<Cart>>(list, HttpStatus.OK);
 	}
 
-	// ************************************************************
-
 	@PostMapping
 	public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) {
-		/*
-		 * @RequestParam int cartId, @RequestParam String restaurantName,
-		 * 
-		 * @RequestParam String foodName,
-		 * 
-		 * @RequestParam double foodPrice, @RequestParam int quantity, @RequestBody
-		 * Address address Cart cart = new Cart();
-		 * 
-		 * cart.setCartId(cartId); cart.setRestaurantName(restaurantName);
-		 * 
-		 * FoodProducts products = new FoodProducts(); products.setFoodName(foodName);
-		 * products.setPrice(foodPrice); products.setQuantity(quantity);
-		 * 
-		 * Set<FoodProducts> items = new HashSet(); items.add(products);
-		 * 
-		 * cart.setProducts(items); cart.setTotalAmount(10000);
-		 * 
-		 * Address restAddress = new Address();
-		 * 
-		 * cart.setAddress(restAddress);
-		 */
+	
 		cartService.addCart(cart);
 		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
 	}
 
-	/*
-	 * @PostMapping public ResponseEntity<Cart> addToCart(@RequestParam int
-	 * cartId,@RequestParam String restaurantName,@RequestParam int totalAmount) {//
-	 * System.out.println(cartId+"cartid"+restaurantName+totalAmount);
-	 * 
-	 * return null; }
-	 */
-
-	// *****************************************************************
+	
 	@GetMapping("/{cartId}")
 	public ResponseEntity<Cart> getCartById(@PathVariable Integer cartId) {
 		Optional<Cart> cart = cartService.getCartById(cartId);
@@ -84,10 +54,12 @@ public class CartResources {
 
 	@PutMapping("/{cartId}")
 	public ResponseEntity<Cart> updateCart(@RequestBody Cart cart) {
-		
+		System.out.println("Inside put methode");
 		Cart updateCart = cartService.getCartById(cart.getCartId()).get();
-		Set<FoodProducts> products = updateCart.getProducts();					//Items present in cart	
-		Set<FoodProducts> newFoodsToAdd = cart.getProducts();				//Items to add into cart		
+		Set<FoodProducts> products = updateCart.getProducts();					
+		Set<FoodProducts> newFoodsToAdd = cart.getProducts();
+		System.out.println("foodList   :"+products);									
+		System.out.println("newFoodList   :"+newFoodsToAdd);
 		Iterator<FoodProducts> itr = newFoodsToAdd.iterator();
 		while(itr.hasNext())
 		{
@@ -99,23 +71,6 @@ public class CartResources {
 		return new ResponseEntity<>(updateCart, HttpStatus.OK);
 	}
 
-//@PutMapping
-//public ResponseEntity<Cart> updateCart(@RequestBody Cart cart) {
-//	Cart updateCart = service.getcartById(cart.getCartId());
-//	Set<Items> items = updateCart.getItems();					//Items present in cart	
-//	Set<Items> newItemsToAdd = cart.getItems();				//Items to add into cart		
-//	Iterator<Items> itr = newItemsToAdd.iterator();
-//	while(itr.hasNext())
-//	{
-//		items.add(itr.next());
-//	}
-//	updateCart.setItems(items);
-//	updateCart.setTotalPrice(service.cartTotal(updateCart));
-//	service.updateCart(updateCart);
-//	return new ResponseEntity<>(updateCart, HttpStatus.OK);
-//}
-
-
 	@DeleteMapping("/{cartId}")
 	public void deleteCart(@PathVariable int cartId) {
 		cartService.deleteCartById(cartId);
@@ -125,8 +80,9 @@ public class CartResources {
 	public void deleteFromCart(@RequestBody Cart cart) {
 
 		Cart updateCart = cartService.getCartById(cart.getCartId()).get();
-		Set<FoodProducts> products = updateCart.getProducts(); // Items already in cart
-		Set<FoodProducts> itemsToRemove = cart.getProducts(); // Items to remove from cart
+		Set<FoodProducts> products = updateCart.getProducts();
+		Set<FoodProducts> itemsToRemove = cart.getProducts(); 
+		System.out.println();
 		Iterator<FoodProducts> itr = itemsToRemove.iterator();
 		while (itr.hasNext()) {
 			products.remove(itr.next());

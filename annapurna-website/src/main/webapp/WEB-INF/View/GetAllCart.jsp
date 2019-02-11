@@ -22,7 +22,7 @@ th, td {
 </style>
 </head>
 <body>
-
+<h1>******Cart*******</h1>
 <form action="placeOrder">
 	<table>
 		<tr>
@@ -41,7 +41,6 @@ th, td {
 				<td>${carts.address}</td>
 			</tr>
 		</jstl:forEach>
-		
 			<tr>
 				<td>${cart.cartId}</td>
 				<td>${cart.products}</td>
