@@ -75,23 +75,18 @@ public class CartResources {
 	public void deleteCart(@PathVariable int cartId) {
 		cartService.deleteCartById(cartId);
 	}
-
-	@DeleteMapping
-	public void deleteFromCart(@RequestBody Cart cart) {
-
-		Cart updateCart = cartService.getCartById(cart.getCartId()).get();
-		Set<FoodProducts> products = updateCart.getProducts();
-		Set<FoodProducts> itemsToRemove = cart.getProducts(); 
-		System.out.println();
-		Iterator<FoodProducts> itr = itemsToRemove.iterator();
-		while (itr.hasNext()) {
-			products.remove(itr.next());
-		}
-
-		updateCart.setProducts(products);
-		updateCart.setTotalAmount(cartService.cartTotal(updateCart));
-		cartService.updateCart(updateCart);
-		cartService.cartTotal(updateCart);
-	}
+	/*
+	 * @DeleteMapping public void deleteFromCart(@RequestBody Cart cart) {
+	 * 
+	 * Cart updateCart = cartService.getCartById(cart.getCartId()).get();
+	 * Set<FoodProducts> products = updateCart.getProducts(); Set<FoodProducts>
+	 * itemsToRemove = cart.getProducts(); System.out.println();
+	 * Iterator<FoodProducts> itr = itemsToRemove.iterator(); while (itr.hasNext())
+	 * { products.remove(itr.next()); }
+	 * 
+	 * updateCart.setProducts(products);
+	 * updateCart.setTotalAmount(cartService.cartTotal(updateCart));
+	 * cartService.updateCart(updateCart); cartService.cartTotal(updateCart); }
+	 */
 }
 

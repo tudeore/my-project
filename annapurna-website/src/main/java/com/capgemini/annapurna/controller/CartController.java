@@ -81,40 +81,31 @@ public class CartController {
 		Set<FoodProducts> products = new HashSet<FoodProducts>();
 		products.add(new FoodProducts("Jeera Rice", 30, 2));
 		products.add(new FoodProducts("Dal Rice", 40, 2));
-		products.add(new FoodProducts("Biryani", 60, 1));
-		products.add(new FoodProducts("Chiken Biryani", 150, 2));
-		products.add(new FoodProducts( "Rice", 30, 2));
+		
 		Address address = new Address("Airoli", "Mumbai", "Maharashtra", "India", 402);
 				 
 		Cart cart = new Cart(104, "Hotel India", products, address);
 		restTemplate.put("http://localhost:8080/carts/" + cart.getCartId() + "", cart,Cart.class);
 		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cart.getCartId(),
 				Cart.class);
-		System.out.println(entity.getBody());
 		model.addAttribute("cart", entity.getBody());
 		return "GetAllCart";
 	}
 
 	@RequestMapping("/removecart")
 	public String removeFromCart(/* @ModelAttribute Cart cart, */ Model model) {
-
 		Set<FoodProducts> products = new HashSet<FoodProducts>();
-		products.add(new FoodProducts("Jeera Rice", 30, 2));
-		products.add(new FoodProducts("Dal Rice", 40, 2));
-		products.add(new FoodProducts("Biryani", 60, 1));
+		products.add(new FoodProducts("Jeera Rice", 30, 2));	
 		Address address = new Address("Airoli", "Mumbai", "Maharashtra", "India", 402);
-		
+				 
 		Cart cart = new Cart(104, "Hotel India", products, address);
-	
-		System.out.println(cart);
-		restTemplate.put("http://localHost:8080/carts/" + cart.getCartId(),  Cart.class);
-		restTemplate.delete("http://localHost:8080/carts/" + cart.getCartId(), Cart.class);
+	restTemplate.postForEntity("http://localHost:8080/carts", cart,Cart.class);
 		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cart.getCartId(),Cart.class);
 		model.addAttribute("cart", entity.getBody());
-		System.out.println("delete from cart  :"+entity.getBody());
 		return "GetAllCart";
 	}
-
+	
+	
 //	@RequestMapping("/deleteCart")
 //	public String deletCart(@ModelAttribute Cart cart, Model model) {
 //
@@ -205,5 +196,4 @@ public class CartController {
 	 * 
 	 * }
 	 */
-
 }
