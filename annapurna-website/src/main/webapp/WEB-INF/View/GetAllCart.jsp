@@ -1,6 +1,7 @@
 <%@ page isELIgnored="false" language="java"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,9 +48,11 @@ th, td {
 	background-color: #4CAF50;
 	color: white;
 }
+
 </style>
 </head>
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<h1>**********CART*********</h1>
 	<form action="placeOrder">
 		<%-- 	<table  id ="cart">
@@ -86,6 +89,7 @@ th, td {
 				<td>${cart.address}</td>
 			</tr>
 	</table> --%>
+	<div ng-app="">
 		<table id="cart">
 			<tr>
 				<th>FOOD ITEMS</th>
@@ -93,6 +97,7 @@ th, td {
 				<th>ADDRESS</th>
 				<th>QUANTITY</th>
 				<th>PRICE</th>
+				<th>TOTAL PRICE</th>
 				<!-- <th>TOTAL PRICE</th> -->
 			</tr>
 			
@@ -104,36 +109,19 @@ th, td {
 				<td>${products.foodName}</td>
 				<td>${cart.restaurantName}</td>
 				<td>${cart.address.area}</td>
-				<td>${products.quantity}</td>
-				<td>${products.price}</td>
-				<%-- <td rowspan="2">${cart.totalAmount}</td> --%>
+				<%-- <td>${products.quantity}</td> --%>
+				<td >
+				<input type="number" name = "quantity" <%-- value = "${products.quantity}" --%> min = "0"  ng-model="num2" ng-init="num2=1" /></td>
+				<td><input type ="number" name = "price" <%-- value ="${products.price}" --%> ng-model="num1" 
+									ng-init = "num1=${products.price}" readonly="readonly"/></td>
+				<!-- <td><input type="number" name="totalprice" ng-model="" </td> -->
+				<td>{{ num1 * num2 }}</td>
 					</tr>
 				</jstl:forEach>
 						</table>
 
-<div><h3>Total Amount: <input type="number" value="${cart.totalAmount}" readonly="readonly"></h3></div>
-		
-			
-			
-				
-				
-				
-<input type='number'  min='1' name='qty' id='qty' />
-			<input type='button' name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'/>
-			<input type='button' name='subtract' onclick='javascript: document.getElementById("qty").value--;' value='-'/>
-
-
-<%-- 
-			<td>${cartItem.productName}</td>
-			 <td>${cartItem.price}</td>
-			<td>${cartItem.quantity}</td>
-			<td>${cartItem.price*cartItem.quantity}</td> --%>
-
-
-
-
-
-
+<div><h3>Total Amount: <input type="number" <%-- value="${cart.totalAmount}" --%>value="{{num1*num2}}" readonly="readonly"></h3></div>
+</div>
 
 
 		<input type="submit" value="Place Order">
