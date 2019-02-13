@@ -31,7 +31,7 @@ public class RestaurantController {
 
 	@RequestMapping("/")
 	public String getAllRestaurants(Model model) {
-		ResponseEntity<List> entity = restTemplate.getForEntity("http://localhost:8081/restaurants", List.class);
+		ResponseEntity<List> entity = restTemplate.getForEntity("http://10.246.92.254:8686/restaurants", List.class);
 		model.addAttribute("list", entity.getBody());
 		return "Home";
 	}

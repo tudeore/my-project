@@ -1,0 +1,160 @@
+{
+        "_id" : 111,
+        "restaurantName" : "grandmamas cafe",
+        "products" : [
+                {
+                        "foodName" : "fries",
+                        "price" : 100,
+                        "quantity" : 8
+                },
+                {
+                        "foodName" : "french fries",
+                        "price" : 200,
+                        "quantity" : 2
+                }
+        ],
+        "totalAmount" : 1200,
+        "address" : {
+                "area" : "Airoli",
+                "city" : "Mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 402
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}
+{
+        "_id" : 101,
+        "restaurantName" : "grandmamas cafe",
+        "products" : [
+                {
+                        "foodName" : "Dal Khichadi",
+                        "price" : 50,
+                        "quantity" : 2
+                },
+                {
+                        "foodName" : "Dal Rice",
+                        "price" : 70,
+                        "quantity" : 2
+                },
+                {
+                        "foodName" : "Veg Pulao",
+                        "price" : 10,
+                        "quantity" : 1
+                }
+        ],
+        "totalAmount" : 250,
+        "address" : {
+                "area" : "Airoli",
+                "city" : "Mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 402
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}
+{
+        "_id" : 102,
+        "restaurantName" : "Veg Katta",
+        "products" : [
+                {
+                        "foodName" : "Tawa Pulao",
+                        "price" : 100,
+                        "quantity" : 1
+                }
+        ],
+        "totalAmount" : 100,
+        "address" : {
+                "area" : "Dadar",
+                "city" : "Mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 402
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}
+{
+        "_id" : 103,
+        "restaurantName" : "Bismilla Hotel",
+        "products" : [
+                {
+                        "foodName" : "Chiken Biryani",
+                        "price" : 150,
+                        "quantity" : 3
+                }
+        ],
+        "totalAmount" : 450,
+        "address" : {
+                "area" : "Airoli",
+                "city" : "Mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 402
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}
+{
+        "_id" : 107,
+        "restaurantName" : "deores cafe",
+        "products" : [
+                {
+                        "foodName" : "momos",
+                        "price" : 100,
+                        "quantity" : 2
+                }
+        ],
+        "totalAmount" : 200,
+        "address" : {
+                "area" : "airoli",
+                "city" : "navi-mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 4001
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}
+{
+        "_id" : 106,
+        "restaurantName" : "deores cafe",
+        "products" : [
+                {
+                        "foodName" : "fries",
+                        "price" : 102.2,
+                        "quantity" : 2
+                },
+                {
+                        "foodName" : "momos",
+                        "price" : 102.2,
+                        "quantity" : 2
+                }
+        ],
+        "totalAmount" : 408.8,
+        "address" : {
+                "area" : "airoli",
+                "city" : "mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 4001
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}
+{
+        "_id" : 104,
+        "restaurantName" : "Hotel India",
+        "products" : [
+                {
+                        "foodName" : "Jeera Rice",
+                        "price" : 30,
+                        "quantity" : 2
+                }
+        ],
+        "totalAmount" : 60,
+        "address" : {
+                "area" : "Airoli",
+                "city" : "Mumbai",
+                "state" : "Maharashtra",
+                "country" : "India",
+                "pincode" : 402
+        },
+        "_class" : "com.capgemini.CartService.entity.Cart"
+}

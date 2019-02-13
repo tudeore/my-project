@@ -33,6 +33,19 @@ th, td {
 	padding: 8px;
 }
 
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 #cart tr:nth-child(even) {
 	background-color: #f2f2f2;
 }
@@ -91,6 +104,7 @@ th, td {
 	</table> --%>
 	<div ng-app="">
 		<table id="cart">
+		
 			<tr>
 				<th>FOOD ITEMS</th>
 				<th>RESTAURANT NAME</th>
@@ -101,30 +115,55 @@ th, td {
 				<!-- <th>TOTAL PRICE</th> -->
 			</tr>
 			
-			
-	
-		
-			<jstl:forEach var="products" items="${cart.products}">
+					
+			<jstl:forEach var="products" items="${cart.products}" varStatus="status" >
 				<tr>
 				<td>${products.foodName}</td>
 				<td>${cart.restaurantName}</td>
 				<td>${cart.address.area}</td>
 				<%-- <td>${products.quantity}</td> --%>
 				<td >
-				<input type="number" name = "quantity" <%-- value = "${products.quantity}" --%> min = "0"  ng-model="num2" ng-init="num2=1" /></td>
-				<td><input type ="number" name = "price" <%-- value ="${products.price}" --%> ng-model="num1" 
-									ng-init = "num1=${products.price}" readonly="readonly"/></td>
+				<input type="number" id="quantity${status.index}" name = "quantity"<%--  value = "${products.quantity}" --%> min = "1"  ng-model="quantity${status.index}" ng-init="quantity${status.index}=${products.quantity}" /></td>
+				<%-- <td><input type ="number"  name = "price" value ="${products.price}" ng-model="num1" 
+									ng-init = "num1=${products.price}" readonly="readonly"/></td> --%>
 				<!-- <td><input type="number" name="totalprice" ng-model="" </td> -->
-				<td>{{ num1 * num2 }}</td>
+				
+				<td><input type="number" name="price" value="${products.price}" readonly="readonly" ng-model="price${status.index}" ng-init = "price${status.index}=${products.price}"/></td>
+				<td>
+				<input type="number"  id="updatedPrice${status.index}" onchange="compute()" name="updatedPrice" value="{{ quantity${status.index} * price${status.index}}}"
+				ng-model="updatedPrice${status.index}" ng-init = "updatedPrice${status.index}={{ quantity${status.index} * price${status.index}}}" readonly="readonly"/>
+				
+				</td>
 					</tr>
 				</jstl:forEach>
 						</table>
 
-<div><h3>Total Amount: <input type="number" <%-- value="${cart.totalAmount}" --%>value="{{num1*num2}}" readonly="readonly"></h3></div>
+
+
+
+
+
+
+
+<div><h3>Total Amount: 
+
+<input type="number" id="totalPrice${status.index}" name="totalPrice" readonly="readonly"
+value="{{ quantity${status.index} * price${status.index}}}" id="totalPrice${status.index}" 
+ng-model="totalPrice${status.index}" 
+ng-init = "totalPrice${status.index}={{ quantity${status.index} * price${status.index}}}" />
+
+
 </div>
+<script type="text/javascript">
+function compute(){
+	var updatedPrice = document.getElementById("updatedPrice${status.index}").value;
+	 document.getElementById("totalPrice${status.index}" ).value=updatedPrice;
+}
 
 
-		<input type="submit" value="Place Order">
+</script>
+
+		<input type="submit" class ="button" value="Place Order">
 	</form>
 </body>
 </html>
