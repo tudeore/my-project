@@ -74,7 +74,4 @@ public class Cart {
 		return "Cart [cartId=" + cartId + ", restaurantName=" + restaurantName + ", products=" + products
 				+ ", address=" + address + "]";
 	}
-
-
-
 }

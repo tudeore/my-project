@@ -1,6 +1,7 @@
 package com.capgemini.annapurna.controller;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,13 @@ public class CartController {
 		model.addAttribute("carts", carts.getBody());
 		return "GetAllCart";
 	}
+
+	/*
+	 * @RequestMapping("/remove") public String remove(Model model,@RequestParam
+	 * String foodName,@RequestParam String restuarantName) {
+	 * System.out.println(foodName); System.out.println(restuarantName); return
+	 * "GetAllCart"; }
+	 */
 
 	/*
 	 * @RequestMapping("/addCart") public String addCart(@RequestParam String
@@ -70,7 +78,6 @@ public class CartController {
 	public String getCartById(@RequestParam("cartId") Integer cartId, Model model) {
 		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cartId + "",
 				Cart.class);
-		System.out.println(entity.getBody());
 		model.addAttribute("cart", entity.getBody());
 		return "GetAllCart";
 	}
@@ -81,31 +88,50 @@ public class CartController {
 		Set<FoodProducts> products = new HashSet<FoodProducts>();
 		products.add(new FoodProducts("Jeera Rice", 30, 2));
 		products.add(new FoodProducts("Dal Rice", 40, 2));
-		
+
 		Address address = new Address("Airoli", "Mumbai", "Maharashtra", "India", 402);
-				 
+
 		Cart cart = new Cart(104, "Hotel India", products, address);
-		restTemplate.put("http://localhost:8080/carts/" + cart.getCartId() + "", cart,Cart.class);
+		restTemplate.put("http://localhost:8080/carts/" + cart.getCartId() + "", cart, Cart.class);
 		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cart.getCartId(),
 				Cart.class);
 		model.addAttribute("cart", entity.getBody());
 		return "GetAllCart";
 	}
 
-	@RequestMapping("/removecart")
-	public String removeFromCart(/* @ModelAttribute Cart cart, */ Model model) {
-		Set<FoodProducts> products = new HashSet<FoodProducts>();
-		products.add(new FoodProducts("Jeera Rice", 30, 2));	
-		Address address = new Address("Airoli", "Mumbai", "Maharashtra", "India", 402);
-				 
-		Cart cart = new Cart(104, "Hotel India", products, address);
-	restTemplate.postForEntity("http://localHost:8080/carts", cart,Cart.class);
-		ResponseEntity<Cart> entity = restTemplate.getForEntity("http://localhost:8080/carts/" + cart.getCartId(),Cart.class);
-		model.addAttribute("cart", entity.getBody());
+	@RequestMapping("/removeFoodProduct")
+	public String removeFromCart(/* @ModelAttribute Cart cart, */@RequestParam("foodName") String foodName,
+			@RequestParam("id") Integer id, @RequestParam("cartId") Integer cartId, Model model) {
+		
+		System.out.println(foodName);
+		
+		  ResponseEntity<Cart> entity =
+		  restTemplate.getForEntity("http://localhost:8080/carts/" + cartId + "",
+		  Cart.class);
+		  
+		  Cart cart = entity.getBody();
+		 
+		Set<FoodProducts> products = cart.getProducts();
+
+		Set<FoodProducts> products1 = new HashSet();
+		Iterator iterator = products.iterator();
+
+		while (iterator.hasNext()) {
+
+			FoodProducts product = (FoodProducts) iterator.next();
+			System.out.println(product.getFoodName());
+			if (product.getFoodName().equalsIgnoreCase(foodName)) {
+				continue;
+			} else {
+				products1.add(product);
+			}
+		}
+
+		System.out.println(products1);
+
 		return "GetAllCart";
 	}
-	
-	
+
 //	@RequestMapping("/deleteCart")
 //	public String deletCart(@ModelAttribute Cart cart, Model model) {
 //
