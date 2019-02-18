@@ -40,12 +40,9 @@ public class CartServiceImpl implements CartService {
 		 double cartPrice = 0;
 
 		for (FoodProducts product : cart.getProducts()) {
-			System.out.println(product);
-			System.out.println("Product total is: " + product.getPrice() * product.getQuantity());
 			totalPrice = product.getPrice() * product.getQuantity();
 			cartPrice = cartPrice + totalPrice;
 		}
-		System.out.println("Total Cart Value is: " +cartPrice);
 		return cartPrice;
 	}
 	

@@ -1,3 +1,63 @@
+<%-- <%@ page isELIgnored="false" language="java"
+	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+table, th, td {
+	padding: 5px;
+	height: 80px;
+	width: 1100px;
+	font-size: 20px;
+	text-align: center;
+	font-family: inherit;
+}
+th, td {
+	padding: 1px;
+	background-color: lightgray;
+}
+</style>
+</head>
+<body>
+<jsp:include page="menu.jsp" />
+<form action="placeOrder">
+	<table>
+		<tr>
+			<th>CART ID</th>
+			<th>PRODUCTS</th>
+			<th>RESTAURANT NAME</th>
+			<th>TOTAL AMOUNT</th>
+			<th>ADDRESS</th>
+		</tr>
+		<jstl:forEach var="carts" items="${carts}">
+			<tr>
+				<td>${carts.cartId}</td>
+				<td>${carts.products}</td>
+				<td>${carts.restaurantName}</td>
+				<td>${carts.totalAmount}</td>
+				<td>${carts.address}</td>
+			</tr>
+		</jstl:forEach>
+		
+			<tr>
+				<td>${cart.cartId}</td>
+				<td>${cart.products}</td>
+				<td>${cart.restaurantName}</td>
+				<td>${cart.totalAmount}</td>
+				<td>${cart.address}</td>
+			</tr>
+	</table>
+	
+	<input type="submit" value= "Place Order">
+	</form>
+</body>
+</html> --%>
+
+
+
 <%@ page isELIgnored="false" language="java"
 	contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,7 +68,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-
+<!-- <style type="text/css">
+table, th, td {
+    padding: 5px;
+    height: 80px;
+    width: 1100px;
+    font-size: 20px;
+    text-align: center;
+    font-family: inherit;
+}
+th, td {
+    padding: 1px;
+    background-color: lightgray;
+}
+</style> -->
 <style type="text/css">
 #cart {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -50,21 +123,12 @@
 	color: white;
 }
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-<script>
-$(document).ready(function(){
-  $("#remove${status.index}").click(function(){
-    $("#tush").remove();
-  });
-});
-</script>
-
 </head>
 <body>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	<h1>**********CART*********</h1>
+	&nbsp;
 	<form action="placeOrder">
 
 		<div ng-app="">
@@ -77,14 +141,19 @@ $(document).ready(function(){
 					<th>QUANTITY</th>
 					<th>PRICE FOR EACH</th>
 					<th>QUANTITY*PRICE</th>
+					<th>REMOVE FROM CART</th>
+					<!-- <th>TOTAL PRICE</th> -->
+					<!-- <th>TOTAL PRICE</th> -->
 				</tr>
+
 
 				<jstl:forEach var="products" items="${cart.products}"
 					varStatus="status">
-					<tr id="tush">
+					<tr>
 						<td>${products.foodName}</td>
 						<td>${cart.restaurantName}</td>
 						<td>${cart.address.area}</td>
+
 
 						<td><input type="number" id="quantity${status.index}"
 							onclick="compute()" name="quantity" min="1"
@@ -102,7 +171,8 @@ $(document).ready(function(){
 							ng-init="updatedPrice${status.index}={{ quantity${status.index} * price${status.index}}}"
 							readonly="readonly" /></td>
 						<td><a
-							href="/cart/removeFoodProduct?id=${status.index}&cartId=${cart.cartId}&foodName=${products.foodName}">Remove</a></td>
+							href="/cart/removeFoodProduct?id=${status.index}&cartId=${cart.cartId}&foodName=${products.foodName}&restaurantId=${restaurantId}">Remove</a></td>
+
 					</tr>
 				</jstl:forEach>
 			</table>
@@ -110,22 +180,28 @@ $(document).ready(function(){
 			<div>
 				<h3>
 					Total Amount: <input type="text" name="amount" id="amount"
-						readonly="readonly" value="${cart.totalAmount}">
+						value="${cart.totalAmount}">
 				</h3>
 
 				<script type="text/javascript">
 function compute(){
-	var x=0; var y = 0; var z = 0;
-	for (i = 0; i < ${fn:length(cart.products)}; i++) {
-		y=document.getElementById("quantity"+i).value;
-		z=document.getElementById("price"+i).value;
-		x = parseInt(x)+parseInt(y*z);
-		document.getElementById("amount").value=x;
-	}
+    var x=0; var y = 0; var z = 0;
+    for (i = 0; i < ${fn:length(cart.products)}; i++) {
+        y=document.getElementById("quantity"+i).value;
+   //     alert(y);
+        z=document.getElementById("price"+i).value;
+      //  alert(z);
+        x = parseInt(x)+parseInt(y*z);
+    //   alert(x);
+        document.getElementById("amount").value=x;
+    }
 }
 </script>
+
 			</div>
-			<input type="submit" class="button" value="Place Order">
+
+			<input type="submit" class="button" value="Place Order">&nbsp;<a
+				class="button" href="/foodItems?restaurantId=${restaurantId}">Continue</a>
 	</form>
 </body>
 </html>

@@ -1,13 +1,7 @@
-/**
- * 
- */
+
 package com.capgemini.CartService.entity;
 import java.util.Set;
 
-/**
- * @author tudeore
- *
- */
 public class FoodItems {
 	
 	private String foodName;		//foodName

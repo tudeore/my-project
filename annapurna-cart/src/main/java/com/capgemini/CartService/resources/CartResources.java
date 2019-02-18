@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.CartService.entity.Cart;
-import com.capgemini.CartService.entity.FoodItems;
 import com.capgemini.CartService.entity.FoodProducts;
 import com.capgemini.CartService.service.CartService;
 
@@ -35,13 +34,6 @@ public class CartResources {
 		return new ResponseEntity<List<Cart>>(list, HttpStatus.OK);
 	}
 
-	@PostMapping
-	public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) {
-
-		cartService.addCart(cart);
-		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
-	}
-
 	@GetMapping("/{cartId}")
 	public ResponseEntity<Cart> getCartById(@PathVariable Integer cartId) {
 		Optional<Cart> cart = cartService.getCartById(cartId);
@@ -51,14 +43,17 @@ public class CartResources {
 		return new ResponseEntity<Cart>(cart.get(), HttpStatus.OK);
 	}
 
+	@PostMapping
+	public ResponseEntity<Cart> addToCart(@RequestBody Cart cart) {
+		cartService.addCart(cart);
+		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+	}
+
 	@PutMapping("/{cartId}")
 	public ResponseEntity<Cart> updateCart(@RequestBody Cart cart) {
-		System.out.println("Inside put methode");
 		Cart updateCart = cartService.getCartById(cart.getCartId()).get();
 		Set<FoodProducts> products = updateCart.getProducts();
 		Set<FoodProducts> newFoodsToAdd = cart.getProducts();
-		System.out.println("foodList   :" + products);
-		System.out.println("newFoodList   :" + newFoodsToAdd);
 		Iterator<FoodProducts> itr = newFoodsToAdd.iterator();
 		while (itr.hasNext()) {
 			products.add(itr.next());
